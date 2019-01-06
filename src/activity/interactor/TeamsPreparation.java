@@ -1,8 +1,47 @@
-package activity.presenter.interactor;
+package activity.interactor;
 
-import activity.presenter.entities.players.*;
+import java.util.ArrayList;
+import java.util.List;
+
+import activity.entities.players.*;
+import static activity.entities.ShareData.*;
 
 public class TeamsPreparation implements Preparator {
+
+    private class DummyTeam {
+        private String name;
+        private int candidateId;
+        private List<Hero> team = new ArrayList<>();
+
+        public DummyTeam(String name) {
+            this.name = name;
+            this.candidateId = 0;
+        }
+
+        protected void setCandidateId(int candidateId) {
+            this.candidateId = candidateId;
+        }
+
+        protected String addHero(){
+            String result = null;
+
+            try {
+                if(team.size() != TEAM_SIZE) {
+                    team.add((Hero) heroes[candidateId].clone());
+                    result = heroes[candidateId].toString();
+                }
+                else throw new CommandFullException();
+            }
+            catch (CloneNotSupportedException e){
+                logDbg("Can't clone player");
+            }
+            catch (CommandFullException e) {
+                logDbg("Command \"" + name + "\" completed" );
+            }
+
+            return result;
+        }
+    }
 
     public static final Hero[] heroes = {
             new Warrior(250, "Тигрил", 50, 0),
@@ -13,18 +52,22 @@ public class TeamsPreparation implements Preparator {
             new Doctor(120, "Жанна", 0, 60),
     };
 
-    @Override
-    public boolean addToTeam1(String name) {
-        return false;
+    private DummyTeam[] teams;
+
+    public TeamsPreparation(int qty) {
+        teams = new DummyTeam[qty];
+        for(int i = 0; i < qty; i++){
+            teams[i] = new DummyTeam("Team " + (i + 1));
+        }
     }
 
     @Override
-    public boolean addToTeam2(String name) {
-        return false;
+    public String commitCandidate(int teamId) {
+        return teams[teamId].addHero();
     }
 
     @Override
-    public void lastSelectionTeam1(String name) {
-
+    public void setCandidate(int teamId, int candidatId) {
+        teams[teamId].setCandidateId(candidatId);
     }
 }

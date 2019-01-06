@@ -1,4 +1,4 @@
 package activity.interactor;
 
-public class CommandFullException {
+public class CommandFullException extends Exception {
 }

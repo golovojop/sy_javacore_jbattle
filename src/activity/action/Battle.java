@@ -1,4 +1,4 @@
-package activity.presenter;
+package activity.action;
 
 public class Battle {
 }

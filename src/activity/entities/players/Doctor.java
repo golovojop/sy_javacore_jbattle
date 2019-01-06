@@ -1,4 +1,4 @@
-package activity.presenter.entities.players;
+package activity.entities.players;
 
 public class Doctor extends Hero {
 

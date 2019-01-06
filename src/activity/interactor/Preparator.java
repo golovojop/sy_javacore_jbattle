@@ -1,7 +1,6 @@
-package activity.presenter.interactor;
+package activity.interactor;
 
 public interface Preparator {
-    boolean addToTeam1(String name);
-    boolean addToTeam2(String name);
-    void lastSelectionTeam1(String name);
+    String commitCandidate(int teamId);
+    void setCandidate(int teamId, int candidatId);
 }

@@ -5,9 +5,9 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import activity.presenter.EventHandler;
 import activity.presenter.View;
-import activity.presenter.entities.players.Hero;
-import activity.presenter.interactor.*;
-import static activity.presenter.entities.ShareData.*;
+import activity.entities.players.Hero;
+import activity.interactor.*;
+import static activity.entities.ShareData.*;
 
 public class BattleWindow implements View {
 
@@ -63,7 +63,7 @@ public class BattleWindow implements View {
         // Set Constraints
         gbc.anchor = GridBagConstraints.NORTHWEST;
         gbc.fill   = GridBagConstraints.NONE;
-        gbc.insets = new Insets(10, 10, 10, 10);
+        gbc.insets = new Insets(5, 5, 5, 5);
         gbc.gridheight = 1;
         gbc.gridwidth  = 1;
         gbc.ipadx = 0;
@@ -86,7 +86,7 @@ public class BattleWindow implements View {
         // Button Add1
         jbtnAdd1 = new JButton("Add to Team 1");
         jbtnAdd1.addActionListener(handler);
-        jbtnAdd1.setActionCommand(CMD_ADD_TO_TEAM1);
+        jbtnAdd1.setActionCommand(CMD_COMMIT_TO_TEAM1);
         gbc.gridy = 0;
         gbc.gridx = 1;
         gbl.setConstraints(jbtnAdd1, gbc);
@@ -108,30 +108,16 @@ public class BattleWindow implements View {
         // Button Add2
         jbtnAdd2 = new JButton("Add to Team 2");
         jbtnAdd2.addActionListener(handler);
-        jbtnAdd2.setActionCommand(CMD_ADD_TO_TEAM2);
+        jbtnAdd2.setActionCommand(CMD_COMMIT_TO_TEAM2);
         gbc.gridy = 0;                    // Номер строки
         gbc.gridx = 3;                    // Номер столбца
         gbl.setConstraints(jbtnAdd2, gbc);
         jfrm.add(jbtnAdd2);
 
-//        jta1 = new JTextArea();
-//        jta1.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-//        jta1.setEditable(false);
-//        jta1.setColumns(15);
-//        jta1.setRows(5);
-//        jta1.setLineWrap(true);
-//        jta1.setWrapStyleWord(true);
-//        gbc.fill = GridBagConstraints.HORIZONTAL;
-//        gbc.gridy = 1;                    // Номер строки
-//        gbc.gridx = 0;                    // Номер столбца
-//        gbc.gridwidth  = 2;
-//        gbl.setConstraints(jta1, gbc);
-//        jfrm.add(jta1);
-
         jta1 = new JTextArea();
         jta1.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         jta1.setEditable(false);
-        jta1.setColumns(15);
+        jta1.setColumns(10);
         jta1.setRows(5);
         jta1.setLineWrap(true);
         jta1.setWrapStyleWord(true);
@@ -143,25 +129,10 @@ public class BattleWindow implements View {
         gbl.setConstraints(jsp1, gbc);
         jfrm.add(jsp1);
 
-
-//        jta2 = new JTextArea();
-//        jta2.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-//        jta2.setEditable(false);
-//        jta2.setColumns(15);
-//        jta2.setRows(5);
-//        jta2.setLineWrap(true);
-//        jta2.setWrapStyleWord(true);
-//        gbc.fill   = GridBagConstraints.HORIZONTAL;
-//        gbc.gridy = 1;                    // Номер строки
-//        gbc.gridx = 2;                    // Номер столбца
-//        gbc.gridwidth  = 2;
-//        gbl.setConstraints(jta2, gbc);
-//        jfrm.add(jta2);
-
         jta2 = new JTextArea();
         jta2.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         jta2.setEditable(false);
-        jta2.setColumns(15);
+        jta2.setColumns(10);
         jta2.setRows(5);
         jta2.setLineWrap(true);
         jta2.setWrapStyleWord(true);
@@ -172,9 +143,6 @@ public class BattleWindow implements View {
         gbc.gridwidth  = 2;
         gbl.setConstraints(jsp2, gbc);
         jfrm.add(jsp2);
-
-
-
 
         // Button Down
         jbtnStart = new JButton("Start");
@@ -187,26 +155,11 @@ public class BattleWindow implements View {
         gbl.setConstraints(jbtnStart, gbc);
         jfrm.add(jbtnStart);
 
-
-//        jta3 = new JTextArea();
-//        gbc.anchor = GridBagConstraints.NORTHEAST;
-//        jta3.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-//        jta3.setEditable(false);
-//        jta3.setColumns(25);
-//        jta3.setRows(5);
-//        jta3.setLineWrap(true);
-//        jta3.setWrapStyleWord(true);
-//        gbc.gridy = 2;                    // Номер строки
-//        gbc.gridx = 1;                    // Номер столбца
-//        gbc.gridwidth  = 3;
-//        gbl.setConstraints(jta3, gbc);
-//        jfrm.add(jta3);
-
         jta3 = new JTextArea();
         gbc.anchor = GridBagConstraints.NORTHEAST;
         jta3.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         jta3.setEditable(false);
-        jta3.setColumns(25);
+        jta3.setColumns(20);
         jta3.setRows(5);
         jta3.setLineWrap(true);
         jta3.setWrapStyleWord(true);
@@ -216,7 +169,6 @@ public class BattleWindow implements View {
         gbc.gridwidth  = 3;
         gbl.setConstraints(jsp3, gbc);
         jfrm.add(jsp3);
-
 
         return jfrm;
     }

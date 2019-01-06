@@ -1,6 +1,6 @@
-package activity.presenter.entities.players;
+package activity.entities.players;
 
-public abstract class Hero {
+public abstract class Hero implements Cloneable {
 
     // здоровье героя
     protected int health;
@@ -52,6 +52,10 @@ public abstract class Hero {
 
     public String getCapacity() {
         return getClass().getSimpleName() + ":" + name + "\n damage=" + damage + ", health=" + health;
+    }
+
+    public Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }
 
