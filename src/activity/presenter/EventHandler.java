@@ -2,7 +2,7 @@ package activity.presenter;
 
 import activity.BattleWindow;
 import activity.interactor.Preparator;
-import activity.interactor.TeamsPreparation;
+import activity.interactor.TeamPreparator;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -17,7 +17,7 @@ public class EventHandler implements ActionListener /*, ListSelectionListener*/ 
 
     public EventHandler(BattleWindow mainWindow) {
         this.mainWindow = mainWindow;
-        preparator = new TeamsPreparation(TEAMS_QTY);
+        preparator = new TeamPreparator(TEAMS_QTY);
     }
 
     @Override
@@ -25,17 +25,17 @@ public class EventHandler implements ActionListener /*, ListSelectionListener*/ 
         String hero;
 
         switch (e.getActionCommand()) {
-            case CMD_SELECTED_FOR_TEAM1:
+            case CMD_OFFER_MEMBER_FOR_TEAM1:
                 preparator.setCandidate(0, ((JComboBox) e.getSource()).getSelectedIndex());
                 break;
-            case CMD_SELECTED_FOR_TEAM2:
+            case CMD_OFFER_MEMBER_FOR_TEAM2:
                 preparator.setCandidate(1, ((JComboBox) e.getSource()).getSelectedIndex());
                 break;
-            case CMD_COMMIT_TO_TEAM1:
+            case CMD_COMMIT_MEMBER_TO_TEAM1:
                 hero = preparator.commitCandidate(0);
                 if(hero != null) mainWindow.addTeam1Player(hero);
                 break;
-            case CMD_COMMIT_TO_TEAM2:
+            case CMD_COMMIT_MEMBER_TO_TEAM2:
                 hero = preparator.commitCandidate(1);
                 if(hero != null) mainWindow.addTeam2Player(hero);
                 break;

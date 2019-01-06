@@ -16,11 +16,10 @@ public class ShareData {
     /**
      * Action Commands
      */
-    public static final String CMD_COMMIT_TO_TEAM1 = "CMD_COMMIT_TO_TEAM1";
-    public static final String CMD_COMMIT_TO_TEAM2 = "CMD_COMMIT_TO_TEAM2";
-    public static final String CMD_SELECTED_FOR_TEAM1 = "CMD_SELECTED_FOR_TEAM1";
-    public static final String CMD_SELECTED_FOR_TEAM2 = "CMD_SELECTED_FOR_TEAM2";
-
+    public static final String CMD_OFFER_MEMBER_FOR_TEAM1 = "CMD_OFFER_MEMBER_FOR_TEAM1";
+    public static final String CMD_OFFER_MEMBER_FOR_TEAM2 = "CMD_OFFER_MEMBER_FOR_TEAM2";
+    public static final String CMD_COMMIT_MEMBER_TO_TEAM1 = "CMD_COMMIT_MEMBER_TO_TEAM1";
+    public static final String CMD_COMMIT_MEMBER_TO_TEAM2 = "CMD_COMMIT_MEMBER_TO_TEAM2";
     public static final String CMD_START_BATTLE = "CMD_START_BATTLE";
 
     /**
