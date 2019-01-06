@@ -7,7 +7,7 @@ public class Warrior extends Hero {
     }
 
     @Override
-    void hit(Hero hero) {
+    public void hit(Hero hero) {
         // если герой не он сам, он может ударить
         if (hero != this) {
             // если у герой которого бьют жив, его можно ударить
@@ -21,7 +21,7 @@ public class Warrior extends Hero {
     }
 
     @Override
-    void healing(Hero hero) {
+    public void healing(Hero hero) {
         System.out.println("Войны не умеют лечить!");
     }
 }

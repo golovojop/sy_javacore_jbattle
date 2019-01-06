@@ -39,7 +39,7 @@ public class BattleWindow implements View {
 
     @Override
     public void logIt(String message) {
-
+        jta3.append(message);
     }
 
     @Override

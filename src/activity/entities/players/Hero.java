@@ -19,10 +19,10 @@ public abstract class Hero implements Cloneable {
     }
 
     // нанести удар
-    abstract void hit(Hero hero);
+    public abstract void hit(Hero hero);
 
     // лечить
-    abstract void healing(Hero hero);
+    public abstract void healing(Hero hero);
 
     // получить удар
     void causeDamage(int damage) {
@@ -38,12 +38,12 @@ public abstract class Hero implements Cloneable {
     }
 
     // добавить здоровье
-    void addHealth(int health) {
+    public void addHealth(int health) {
         this.health += health;
     }
 
-    void info() {
-        System.out.println(name + " " + (health < 0 ? "Герой мертвый" : health) + " " + damage);
+    public String info() {
+        return name + " " + (health < 0 ? "Герой мертвый" : health) + " " + damage;
     }
 
     public String toString() {

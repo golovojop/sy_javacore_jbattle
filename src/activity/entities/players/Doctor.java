@@ -7,12 +7,12 @@ public class Doctor extends Hero {
     }
 
     @Override
-    void hit(Hero hero) {
+    public void hit(Hero hero) {
         System.out.println("Доктор не может бить!");
     }
 
     @Override
-    void healing(Hero hero) {
+    public void healing(Hero hero) {
         hero.addHealth(addHeal);
     }
 }

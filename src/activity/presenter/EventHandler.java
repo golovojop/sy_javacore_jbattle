@@ -10,14 +10,14 @@ import java.awt.event.ActionListener;
 import static activity.entities.ShareData.*;
 
 
-public class EventHandler implements ActionListener /*, ListSelectionListener*/ {
+public class EventHandler implements Presenter, ActionListener  {
 
     View mainWindow;
     Preparator preparator;
 
     public EventHandler(BattleWindow mainWindow) {
         this.mainWindow = mainWindow;
-        preparator = new TeamPreparator(TEAMS_QTY);
+        preparator = new TeamPreparator(this, TEAMS_QTY);
     }
 
     @Override
@@ -40,37 +40,14 @@ public class EventHandler implements ActionListener /*, ListSelectionListener*/ 
                 if(hero != null) mainWindow.addTeam2Player(hero);
                 break;
             case CMD_START_BATTLE:
-                mainWindow.onStart(true);
+                mainWindow.onStart(preparator.commandToFight());
+                //preparator.commandToFight();
                 break;
         }
-
     }
-//
-//
-//        if(e.getSource() instanceof JComboBox) {
-//            switch (e.getActionCommand()) {
-//                case CMD_SELECTED_FOR_TEAM1:
-//                    preparator.setCandidate(0, ((JComboBox) e.getSource()).getSelectedIndex());
-//                    break;
-//                case CMD_SELECTED_FOR_TEAM2:
-//                    preparator.setCandidate(0, ((JComboBox) e.getSource()).getSelectedIndex());
-//                    break;
-//            }
-//        } else {
-//            switch (e.getActionCommand()) {
-//                case CMD_COMMIT_TO_TEAM1:
-//                    hero = preparator.commitCandidate(0);
-//                    if(hero != null) mainWindow.addTeam1Player(hero);
-//                    break;
-//                case CMD_COMMIT_TO_TEAM2:
-//                    hero = preparator.commitCandidate(1);
-//                    if(hero != null) mainWindow.addTeam1Player(hero);
-//                    break;
-//                case CMD_START_BATTLE:
-//                    mainWindow.onStart(true);
-//                    break;
-//            }
-//        }
-//    }
 
+    @Override
+    public void nextComment(String message) {
+        mainWindow.logIt(message);
+    }
 }
