@@ -8,7 +8,7 @@ public class Doctor extends Hero {
 
     @Override
     public void hit(Hero hero) {
-        System.out.println("Доктор не может бить!");
+        liveCam.nextComment("Доктор не может бить!");
     }
 
     @Override

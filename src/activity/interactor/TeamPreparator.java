@@ -16,16 +16,18 @@ public class TeamPreparator implements Preparator, TvShow {
      */
     private class DummyTeam {
         private String name;
+        private int id;
         private int candidateId;
         private List<Hero> team = new ArrayList<>();
 
-        public DummyTeam(String name) {
-            this.name = name;
-            this.candidateId = 0;
+        public DummyTeam(int id) {
+            this.id = id;
+            this.candidateId = 0 * 2 + id;
         }
 
         protected void setCandidateId(int candidateId) {
-            this.candidateId = candidateId;
+//            this.candidateId = candidateId;
+            this.candidateId = candidateId * 2 + id;
         }
 
         protected String addHero(){
@@ -33,8 +35,10 @@ public class TeamPreparator implements Preparator, TvShow {
 
             try {
                 if(team.size() != TEAM_SIZE) {
-                    team.add((Hero) heroes[candidateId].clone());
-                    result = heroes[candidateId].toString();
+                    Hero h = (Hero) heroes[candidateId].clone();
+                    h.setLiveCam(TeamPreparator.this);
+                    team.add(h);
+                    result = h.toString();
                 }
                 else throw new CommandFullException();
             }
@@ -42,10 +46,14 @@ public class TeamPreparator implements Preparator, TvShow {
                 logDbg("Can't clone player");
             }
             catch (CommandFullException e) {
-                logDbg("Command \"" + name + "\" completed" );
+                logDbg("Command \"" + name + "\" is completed" );
             }
 
             return result;
+        }
+
+        public String toString() {
+            return "Team " + id + 1;
         }
 
         public Hero[] getTeam() {
@@ -56,14 +64,15 @@ public class TeamPreparator implements Preparator, TvShow {
     /**
      * Персонажи
      */
-    public static final Hero[] heroes = {
-            new Warrior(250, "Тигрил", 50, 0),
-            new Warrior(290, "Минотавр", 60, 0),
-            new Assassin(150, "Акали", 70, 0),
-            new Assassin(160, "Джинкс", 90, 0),
-            new Doctor(110, "Зои", 0, 80),
-            new Doctor(120, "Жанна", 0, 60),
-    };
+//    public static final Hero[] heroes = {
+//            new Warrior(250, "Тигрил", 50, 0),
+//            new Warrior(290, "Минотавр", 60, 0),
+//            new Assassin(150, "Акали", 70, 0),
+//            new Assassin(160, "Джинкс", 90, 0),
+//            new Doctor(110, "Зои", 0, 80),
+//            new Doctor(120, "Жанна", 0, 60),
+//    };
+    public static final Hero[] heroes = TeamHelper.genHeroes();
 
     /**
      * Массив подготовленных команд
@@ -76,7 +85,7 @@ public class TeamPreparator implements Preparator, TvShow {
 
         teams = new DummyTeam[qty];
         for(int i = 0; i < qty; i++){
-            teams[i] = new DummyTeam("Team " + (i + 1));
+            teams[i] = new DummyTeam(i);
         }
     }
 

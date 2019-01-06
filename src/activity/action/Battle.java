@@ -23,7 +23,7 @@ public class Battle {
         Random randomStep = new Random();
         Random randomHealing = new Random();
         // количество раундов
-        int round = 3;
+        int round = 13;
 
         for (int j = 0; j < round; j++) {
             // проходим по всем участникам команды

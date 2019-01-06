@@ -39,7 +39,7 @@ public class BattleWindow implements View {
 
     @Override
     public void logIt(String message) {
-        jta3.append(message);
+        jta3.append(message + "\n");
     }
 
     @Override
@@ -62,9 +62,12 @@ public class BattleWindow implements View {
 
         // Team1 list selection
         jcbChoice1 = new JComboBox();
-        for(Hero hero : TeamPreparator.heroes) {
-            jcbChoice1.addItem(hero);
+        for(int i = 0; i < TeamPreparator.heroes.length; i++){
+            if(i % 2 == 0) jcbChoice1.addItem(TeamPreparator.heroes[i]);
         }
+//        for(Hero hero : TeamPreparator.heroes) {
+//            jcbChoice1.addItem(hero);
+//        }
         jcbChoice1.addActionListener(handler);
         jcbChoice1.setActionCommand(CMD_OFFER_MEMBER_FOR_TEAM1);
 
@@ -75,9 +78,12 @@ public class BattleWindow implements View {
 
         // Team2 list selection
         jcbChoice2 = new JComboBox();
-        for(Hero hero : TeamPreparator.heroes) {
-            jcbChoice2.addItem(hero);
+        for(int i = 0; i < TeamPreparator.heroes.length; i++){
+            if(i % 2 != 0) jcbChoice2.addItem(TeamPreparator.heroes[i]);
         }
+//        for(Hero hero : TeamPreparator.heroes) {
+//            jcbChoice2.addItem(hero);
+//        }
         jcbChoice2.addActionListener(handler);
         jcbChoice2.setActionCommand(CMD_OFFER_MEMBER_FOR_TEAM2);
 

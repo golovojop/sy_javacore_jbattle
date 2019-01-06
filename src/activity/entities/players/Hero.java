@@ -1,15 +1,19 @@
 package activity.entities.players;
 
+import activity.interactor.TvShow;
+
 public abstract class Hero implements Cloneable {
 
-    // здоровье героя
-    protected int health;
     // имя героя
     protected String name;
+    // здоровье героя
+    protected int health;
     // сколько урона может нанести герой
     protected int damage;
     // сколько здоровья может восстановть герой
     protected int addHeal;
+    // трансляция боя
+    protected TvShow liveCam;
 
     public Hero(int health, String name, int damage, int addHeal) {
         this.health = health;
@@ -25,12 +29,16 @@ public abstract class Hero implements Cloneable {
     public abstract void healing(Hero hero);
 
     // получить удар
-    void causeDamage(int damage) {
+    public void causeDamage(int damage) {
         if(health < 0) {
-            System.out.println("Герой уже мертвый!");
+            liveCam.nextComment("Герой уже мертвый!");
         } else {
             health -= damage;
         }
+    }
+
+    public void setLiveCam(TvShow liveCam) {
+        this.liveCam = liveCam;
     }
 
     public int getHealth() {

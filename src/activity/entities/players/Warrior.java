@@ -2,6 +2,8 @@ package activity.entities.players;
 
 public class Warrior extends Hero {
 
+    private final int HEALTH_MAX = 300;
+
     public Warrior(int health, String name, int damage, int addHeal) {
         super(health, name, damage, addHeal);
     }
@@ -12,16 +14,16 @@ public class Warrior extends Hero {
         if (hero != this) {
             // если у герой которого бьют жив, его можно ударить
             if(health < 0) {
-                System.out.println("Герой погиб и бить не может!");
+                liveCam.nextComment(this.name + " погиб и бить не может!");
             } else {
                 hero.causeDamage(damage);
             }
-            System.out.println(this.name + " нанес урон " + hero.name);
+            liveCam.nextComment(this.name + " нанес урон " + hero.name);
         }
     }
 
     @Override
     public void healing(Hero hero) {
-        System.out.println("Войны не умеют лечить!");
+        liveCam.nextComment("Воины не умеют лечить!");
     }
 }

@@ -41,7 +41,6 @@ public class EventHandler implements Presenter, ActionListener  {
                 break;
             case CMD_START_BATTLE:
                 mainWindow.onStart(preparator.commandToFight());
-                //preparator.commandToFight();
                 break;
         }
     }
