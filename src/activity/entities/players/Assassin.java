@@ -2,24 +2,25 @@ package activity.entities.players;
 
 import java.util.Random;
 
+import static activity.entities.ShareData.*;
+
 public class Assassin extends Hero {
 
-    int cricitalHit;
-    Random random;
+    private int cricitalHit;
 
-    public Assassin(int heal, String name, int damage, int addHeal) {
-        super(heal, name, damage, addHeal);
-        random = new Random();
+    public Assassin(String name, int heal, int damage, int addHeal) {
+        super(name, heal, damage, addHeal);
+        Random random = new Random();
         this.cricitalHit = random.nextInt(20);
     }
 
     @Override
     public void hit(Hero hero) {
-        // если герой не он сам, он может ударить
+        // Себя бить нельзя
         if (hero != this) {
-            // если герой которого бьют жив, его можно ударить
+            // Бить может только живой
             if(health < 0) {
-                liveCam.nextComment(this.name + "погиб и бить не может!");
+                liveCam.nextComment(this.name + " погиб и бить не может!");
             } else {
                 hero.causeDamage(damage + cricitalHit);
             }
@@ -28,7 +29,14 @@ public class Assassin extends Hero {
     }
 
     @Override
+    // Пополнить свое здоровье
+    public void addHealth(int health) {
+        this.health += health;
+        if(this.health > HEAL_MAX_ASSASSIN) this.health = HEAL_MAX_ASSASSIN;
+    }
+
+    @Override
     public void healing(Hero hero) {
-        liveCam.nextComment("Убийцы не умеют лечить!");
+        liveCam.nextComment(name + " не умеет лечить!");
     }
 }

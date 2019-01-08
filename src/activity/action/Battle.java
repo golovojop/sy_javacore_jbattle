@@ -2,60 +2,57 @@ package activity.action;
 
 import java.util.Random;
 
-import activity.entities.players.Doctor;
-import activity.entities.players.Hero;
-import activity.entities.players.Warrior;
+import activity.entities.players.*;
 import activity.interactor.TvShow;
+import static activity.entities.ShareData.*;
 
 public class Battle {
 
-    private Hero[] team1;
-    private Hero[] team2;
     private TvShow tvshow;
+    private Team team1;
+    private Team team2;
 
-    public Battle(Hero[] team1, Hero[] team2, TvShow tvshow) {
+    public Battle(Team team1, Team team2, TvShow tvShow){
         this.team1 = team1;
         this.team2 = team2;
-        this.tvshow = tvshow;
+        this.tvshow = tvShow;
     }
 
     public void fight() {
-        Random randomStep = new Random();
-        Random randomHealing = new Random();
-        // количество раундов
-        int round = 13;
+        Random randomTeam = new Random();
 
-        for (int j = 0; j < round; j++) {
-            // проходим по всем участникам команды
-            for (int i = 0; i < team1.length; i++) {
-                // рандомно выбираем кто будет первый ходить
-                if(randomStep.nextInt(2) == 0) {
-                    // если персонаж не доктор, то он может удрарить
-                    // если доктор, то он лечит
-                    if(team1[i] instanceof Doctor) {
-                        team1[i].healing(team1[randomHealing.nextInt(2)]);
-                    } else {
-                        team1[i].hit(team2[i]);
+        int rounds = 0;
+
+        do {
+            Hero h;
+            // Рандомно выбираем команду
+            switch(randomTeam.nextInt(TEAMS_QTY)){
+                case 0:
+                    h = team1.getNext();
+                    if(h instanceof Doctor){
+                        team1.healing(h);
                     }
-                } else {
-                    if(team2[i] instanceof Doctor) {
-                        team2[i].healing(team2[randomHealing.nextInt(2)]);
-                    } else {
-                        team2[i].hit(team1[i]);
+                    else {
+                        h.hit(team2.getNext());
                     }
-                }
+                    break;
+                default:
+                    h = team2.getNext();
+                    if(h instanceof Doctor){
+                        team2.healing(h);
+                    }
+                    else {
+                        h.hit(team1.getNext());
+                    }
             }
-        }
 
-        for (Hero t1: team1) {
-            tvshow.nextComment(t1.info());
+            rounds++;
         }
+        while (team1.isAnybodyLive() && team2.isAnybodyLive());
 
-        for (Hero t2: team2) {
-            tvshow.nextComment(t2.info());
-        }
+        team1.showResults();
+        team2.showResults();
 
+        logDbg((team1.isAnybodyLive() ? team1 : team2) + " won in " + rounds + " rounds");
     }
-
-
 }

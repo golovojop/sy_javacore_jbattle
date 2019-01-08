@@ -2,7 +2,7 @@ package activity.entities.players;
 
 import activity.interactor.TvShow;
 
-public abstract class Hero implements Cloneable {
+public abstract class Hero implements Cloneable, Comparable {
 
     // имя героя
     protected String name;
@@ -15,51 +15,53 @@ public abstract class Hero implements Cloneable {
     // трансляция боя
     protected TvShow liveCam;
 
-    public Hero(int health, String name, int damage, int addHeal) {
+    public Hero(String name, int health, int damage, int addHeal) {
         this.health = health;
         this.name = name;
         this.damage = damage;
         this.addHeal = addHeal;
     }
 
-    // нанести удар
+    @Override
+    public int compareTo(Object o) {
+        return this.health - ((Hero)o).health;
+    }
+
+    // Нанести удар другому Hero
     public abstract void hit(Hero hero);
 
-    // лечить
+    // Лечить Hero
     public abstract void healing(Hero hero);
 
-    // получить удар
+    // Пополнить свое здоровье
+    public abstract void addHealth(int health);
+
+    // Обработать полученный удар
     public void causeDamage(int damage) {
         if(health < 0) {
-            liveCam.nextComment("Герой уже мертвый!");
+            liveCam.nextComment(name + " уже мертвый!");
         } else {
             health -= damage;
         }
+    }
+
+    public boolean isAlive() {
+        return health > 0;
     }
 
     public void setLiveCam(TvShow liveCam) {
         this.liveCam = liveCam;
     }
 
-    public int getHealth() {
-        return health;
-    }
-
-    // добавить здоровье
-    public void addHealth(int health) {
-        this.health += health;
-    }
-
     public String info() {
-        return name + " " + (health < 0 ? "Герой мертвый" : health) + " " + damage;
+        return name + ": h=" + (health < 0 ? " мертв" : health) + ", d=" + damage;
     }
 
     public String toString() {
         return getClass().getSimpleName() + ":" + name;
     }
-
     public String getCapacity() {
-        return getClass().getSimpleName() + ":" + name + "\n damage=" + damage + ", health=" + health;
+        return getClass().getSimpleName() + ":" + name + "\n d:" + damage + ", h:" + health;
     }
 
     public Object clone() throws CloneNotSupportedException {

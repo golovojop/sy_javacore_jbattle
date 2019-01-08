@@ -1,18 +1,29 @@
 package activity.entities.players;
 
+import static activity.entities.ShareData.*;
+
 public class Doctor extends Hero {
 
-    public Doctor(int heal, String name, int damage, int addHeal) {
-        super(heal, name, damage, addHeal);
+    public Doctor(String name, int heal, int damage, int addHeal) {
+        super(name, heal, damage, addHeal);
     }
 
     @Override
     public void hit(Hero hero) {
-        liveCam.nextComment("Доктор не может бить!");
+        liveCam.nextComment("Доктор " + name + " не может бить!");
     }
 
     @Override
+    // Получить здоровье
+    public void addHealth(int health) {
+        this.health += health;
+        if(this.health > HEAL_MAX_DOCTOR) this.health = HEAL_MAX_DOCTOR;
+    }
+
+    @Override
+    // Лечить другого
     public void healing(Hero hero) {
-        hero.addHealth(addHeal);
+        // Себя лечить нельзя
+        if(hero != this) hero.addHealth(addHeal);
     }
 }

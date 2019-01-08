@@ -22,6 +22,21 @@ public class ShareData {
     public static final String CMD_COMMIT_MEMBER_TO_TEAM2 = "CMD_COMMIT_MEMBER_TO_TEAM2";
     public static final String CMD_START_BATTLE = "CMD_START_BATTLE";
 
+
+    public static final int HEAL_MAX_WARRIOR = 250;
+    public static final int HEAL_MAX_ASSASSIN = 190;
+    public static final int HEAL_MAX_DOCTOR = 120;
+    public static final int HEAL_RANGE = 50;
+
+    public static final int DMG_MAX_WARRIOR = 70;
+    public static final int DMG_MAX_ASSASSIN = 110;
+    public static final int DMG_MAX_DOCTOR = 0;
+    public static final int DMG_RANGE = 40;
+
+    public static final int HEAL_INC_MAX = 30;
+    public static final int HEAL_INC_MIN = 10;
+    public static final int HEAL_INC_ZERO = 0;
+
     /**
      * Teams params
      */

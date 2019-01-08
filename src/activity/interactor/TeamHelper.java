@@ -4,17 +4,17 @@ import activity.entities.players.Assassin;
 import activity.entities.players.Doctor;
 import activity.entities.players.Hero;
 import activity.entities.players.Warrior;
+import static activity.entities.ShareData.*;
 
 import java.util.ArrayList;
 import java.util.Random;
+
 
 public class TeamHelper {
 
     /**
      * Персонажи
      */
-    //public static final Hero[] heroes = genHeroes();
-
     private static String[] nameCollection = {
             "Тигрил",
             "Минотавр",
@@ -29,6 +29,9 @@ public class TeamHelper {
             "Данте",
             "Брюс"};
 
+    /**
+     * Генератор героев
+     */
     public static Hero[] genHeroes() {
         int seedNum = inRange(0, nameCollection.length - 1);
 
@@ -47,23 +50,29 @@ public class TeamHelper {
                     default:
                         al.add(genDoctor(nameCollection[seedNum++]));
             }
-
         }
-
         return al.toArray(new Hero[al.size()]);
-
     }
 
     public static Warrior genWarrior(String name) {
-        return new Warrior(inRange(200, 280), name, inRange(30, 60), 0);
+        return new Warrior(name,
+                inRange(HEAL_MAX_WARRIOR - HEAL_RANGE, HEAL_MAX_WARRIOR),
+                inRange(DMG_MAX_WARRIOR - DMG_RANGE, DMG_MAX_WARRIOR),
+                HEAL_INC_ZERO);
     }
 
     public static Assassin genAssassin(String name) {
-        return new Assassin(inRange(130, 160), name, inRange(60, 90), 0);
+        return new Assassin(name,
+                inRange(HEAL_MAX_ASSASSIN - HEAL_RANGE, HEAL_MAX_ASSASSIN),
+                inRange(DMG_MAX_ASSASSIN - DMG_RANGE, DMG_MAX_ASSASSIN),
+                HEAL_INC_ZERO);
     }
 
     public static Doctor genDoctor(String name) {
-        return new Doctor(inRange(100, 120), name, 0, inRange(30, 60));
+        return new Doctor(name,
+                inRange(HEAL_MAX_DOCTOR - HEAL_RANGE, HEAL_MAX_DOCTOR),
+                DMG_MAX_DOCTOR,
+                inRange(HEAL_INC_MIN, HEAL_INC_MAX));
     }
 
     public static int inRange(int min, int max) {

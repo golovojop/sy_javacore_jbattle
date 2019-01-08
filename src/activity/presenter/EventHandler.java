@@ -22,7 +22,7 @@ public class EventHandler implements Presenter, ActionListener  {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String hero;
+        String heroInfo;
 
         switch (e.getActionCommand()) {
             case CMD_OFFER_MEMBER_FOR_TEAM1:
@@ -32,12 +32,12 @@ public class EventHandler implements Presenter, ActionListener  {
                 preparator.setCandidate(1, ((JComboBox) e.getSource()).getSelectedIndex());
                 break;
             case CMD_COMMIT_MEMBER_TO_TEAM1:
-                hero = preparator.commitCandidate(0);
-                if(hero != null) mainWindow.addTeam1Player(hero);
+                heroInfo = preparator.commitCandidate(0);
+                if(heroInfo != null) mainWindow.addTeam1Player(heroInfo);
                 break;
             case CMD_COMMIT_MEMBER_TO_TEAM2:
-                hero = preparator.commitCandidate(1);
-                if(hero != null) mainWindow.addTeam2Player(hero);
+                heroInfo = preparator.commitCandidate(1);
+                if(heroInfo != null) mainWindow.addTeam2Player(heroInfo);
                 break;
             case CMD_START_BATTLE:
                 mainWindow.onStart(preparator.commandToFight());
