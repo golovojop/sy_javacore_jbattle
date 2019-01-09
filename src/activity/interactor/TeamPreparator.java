@@ -36,9 +36,9 @@ public class TeamPreparator implements Preparator, TvShow {
                     heroesId.add(this.candidateId);
                     result = heroes[candidateId].getCapacity();
                 }
-                else throw new CommandFullException();
+                else throw new TeamIsFullException();
             }
-            catch (CommandFullException e) {
+            catch (TeamIsFullException e) {
                 logDbg("Command \"Team " + (commandId + 1) + "\" is completed" );
             }
             return result;
@@ -76,27 +76,27 @@ public class TeamPreparator implements Preparator, TvShow {
     /**
      * Массив подготовленных команд
      */
-    private DummyTeam[] teams;
+    private DummyTeam[] dummyteams;
     private Presenter presenter;
 
     public TeamPreparator(Presenter presenter, int qty) {
         this.presenter = presenter;
 
-        teams = new DummyTeam[qty];
+        dummyteams = new DummyTeam[qty];
         for(int i = 0; i < qty; i++){
-            teams[i] = new DummyTeam(i);
+            dummyteams[i] = new DummyTeam(i);
         }
     }
 
     @Override
     public String commitCandidate(int teamId) {
 
-        return teams[teamId].addHero();
+        return dummyteams[teamId].addHero();
     }
 
     @Override
     public void setCandidate(int teamId, int candidateId) {
-        teams[teamId].setCandidateId(candidateId);
+        dummyteams[teamId].setCandidateId(candidateId);
     }
 
     @Override
@@ -109,14 +109,14 @@ public class TeamPreparator implements Preparator, TvShow {
         Boolean result = false;
 
         try {
-            for(DummyTeam dt : teams) {
-                if(dt.getPretenders() < TEAM_SIZE) throw new CommandNotFullException();
+            for(DummyTeam dt : dummyteams) {
+                if(dt.getPretenders() < TEAM_SIZE) throw new TeamIsNotFullException();
             }
-            Battle battle = new Battle(teams[0].createTeam(), teams[1].createTeam(), this);
+            Battle battle = new Battle(dummyteams[0].createTeam(), dummyteams[1].createTeam(), this);
             battle.fight();
             result = true;
         }
-        catch (CommandNotFullException e) {
+        catch (TeamIsNotFullException e) {
             logDbg("Not enough players in one of the teams" );
         }
         return result;
