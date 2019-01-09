@@ -40,7 +40,7 @@ public class TeamHelper {
         for(int i = 0; i < nameCollection.length; i++){
             if(seedNum == nameCollection.length) seedNum = 0;
 
-            switch (i % 3) {
+            switch (i % TEAM_SIZE) {
                 case 0:
                     al.add(genWarrior(nameCollection[seedNum++]));
                     break;

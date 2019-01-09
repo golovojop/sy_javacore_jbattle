@@ -24,6 +24,9 @@ public class Doctor extends Hero {
     // Лечить другого
     public void healing(Hero hero) {
         // Себя лечить нельзя
-        if(hero != this) hero.addHealth(addHeal);
+        if(hero != this) {
+            hero.addHealth(addHeal);
+            liveCam.nextComment(this.name + " подлечил " + hero.name);
+        }
     }
 }
