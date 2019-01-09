@@ -16,9 +16,9 @@ public class Warrior extends Hero {
             if(health < 0) {
                 liveCam.nextComment(this.name + " погиб и бить не может!");
             } else {
+                liveCam.nextComment(this.name + " нанес урон " + hero.name);
                 hero.causeDamage(damage);
             }
-            liveCam.nextComment(this.name + " нанес урон " + hero.name);
         }
     }
 

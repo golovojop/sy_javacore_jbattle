@@ -20,6 +20,7 @@ public class Battle {
 
     public void fight() {
         Random randomTeam = new Random();
+        Random randomHealing = new Random();
 
         int rounds = 0;
 
@@ -29,6 +30,10 @@ public class Battle {
             switch(randomTeam.nextInt(TEAMS_QTY)){
                 case 0:
                     h = team1.getNext();
+                    /**
+                     * Если здесь оказался доктор, то значит у остальных здоровья осталось
+                     * меньше, чем у него, поэтому пора лечить команду.
+                     */
                     if(h instanceof Doctor){
                         team1.healing(h);
                     }
@@ -38,6 +43,9 @@ public class Battle {
                     break;
                 default:
                     h = team2.getNext();
+                    /**
+                     * Тоже самое про доктора.
+                     */
                     if(h instanceof Doctor){
                         team2.healing(h);
                     }
@@ -45,6 +53,8 @@ public class Battle {
                         h.hit(team1.getNext());
                     }
             }
+
+
 
             rounds++;
         }
