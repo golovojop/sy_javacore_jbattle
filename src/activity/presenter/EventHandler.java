@@ -17,7 +17,7 @@ public class EventHandler implements Presenter, ActionListener  {
 
     public EventHandler(BattleWindow mainWindow) {
         this.mainWindow = mainWindow;
-        preparator = new TeamPreparator(this, TEAMS_QTY);
+        preparator = new TeamPreparator(this);
     }
 
     @Override
@@ -42,6 +42,9 @@ public class EventHandler implements Presenter, ActionListener  {
             case CMD_START_BATTLE:
                 mainWindow.onStart(preparator.commandToFight());
                 break;
+            case CMD_REPEAT:
+                mainWindow.onReset();
+                preparator.reInit();
         }
     }
 

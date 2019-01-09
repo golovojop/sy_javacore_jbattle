@@ -15,37 +15,48 @@ public class TeamPreparator implements Preparator, TvShow {
      * Класс собирающий сведения о кандидатах в команду
      */
     private class DummyTeam {
-        private int commandId;
+        private int teamId;
         private int candidateId;
         private List<Integer> heroesId = new ArrayList<>();
 
         public DummyTeam(int id) {
-            this.commandId = id;
-            this.candidateId = 0 * TEAMS_QTY + this.commandId;
+            this.teamId = id;
+            this.candidateId = 0 * TEAMS_QTY + this.teamId;
         }
 
         protected void setCandidateId(int candtId) {
-            this.candidateId = candtId * TEAMS_QTY + this.commandId;
+            this.candidateId = candtId * TEAMS_QTY + this.teamId;
+        }
+
+        // Нельзя дважды выбрать одного кандидата в команду
+        private boolean isInTeam(int candId) {
+            return heroesId.contains(candId);
         }
 
         protected String addHero(){
             String result = null;
 
             try {
+                if(isInTeam(this.candidateId)) {
+                    throw new TeamConsistOfException();
+                }
                 if(heroesId.size() != TEAM_SIZE) {
                     heroesId.add(this.candidateId);
                     result = heroes[candidateId].getCapacity();
                 }
-                else throw new CommandFullException();
+                else throw new TeamIsFullException();
             }
-            catch (CommandFullException e) {
-                logDbg("Command \"Team " + (commandId + 1) + "\" is completed" );
+            catch (TeamConsistOfException e){
+                logDbg("Player <" + heroes[candidateId] + "> already in team");
+            }
+            catch (TeamIsFullException e) {
+                logDbg("Command \"Team " + (teamId + 1) + "\" is completed" );
             }
             return result;
         }
 
         public String toString() {
-            return "Team " + commandId + 1;
+            return "Team " + (teamId + 1);
         }
 
         public int getPretenders() {
@@ -64,7 +75,7 @@ public class TeamPreparator implements Preparator, TvShow {
             catch (CloneNotSupportedException e){
                 logDbg("Can't clone player");
             }
-            return new Team(commandId + 1, hr);
+            return new Team(teamId + 1, hr);
         }
     }
 
@@ -76,27 +87,30 @@ public class TeamPreparator implements Preparator, TvShow {
     /**
      * Массив подготовленных команд
      */
-    private DummyTeam[] teams;
+    private DummyTeam[] dummyteams;
     private Presenter presenter;
 
-    public TeamPreparator(Presenter presenter, int qty) {
+    public TeamPreparator(Presenter presenter) {
         this.presenter = presenter;
+        init();
+    }
 
-        teams = new DummyTeam[qty];
-        for(int i = 0; i < qty; i++){
-            teams[i] = new DummyTeam(i);
+    // Create local DummyTeam array
+    private void init() {
+        dummyteams = new DummyTeam[TEAMS_QTY];
+        for(int i = 0; i < TEAMS_QTY; i++){
+            dummyteams[i] = new DummyTeam(i);
         }
     }
 
     @Override
     public String commitCandidate(int teamId) {
-
-        return teams[teamId].addHero();
+        return dummyteams[teamId].addHero();
     }
 
     @Override
     public void setCandidate(int teamId, int candidateId) {
-        teams[teamId].setCandidateId(candidateId);
+        dummyteams[teamId].setCandidateId(candidateId);
     }
 
     @Override
@@ -105,18 +119,23 @@ public class TeamPreparator implements Preparator, TvShow {
     }
 
     @Override
+    public void reInit() {
+        init();
+    }
+
+    @Override
     public boolean commandToFight() {
         Boolean result = false;
 
         try {
-            for(DummyTeam dt : teams) {
-                if(dt.getPretenders() < TEAM_SIZE) throw new CommandNotFullException();
+            for(DummyTeam dt : dummyteams) {
+                if(dt.getPretenders() < TEAM_SIZE) throw new TeamIsNotFullException();
             }
-            Battle battle = new Battle(teams[0].createTeam(), teams[1].createTeam(), this);
+            Battle battle = new Battle(dummyteams[0].createTeam(), dummyteams[1].createTeam(), this);
             battle.fight();
             result = true;
         }
-        catch (CommandNotFullException e) {
+        catch (TeamIsNotFullException e) {
             logDbg("Not enough players in one of the teams" );
         }
         return result;

@@ -18,7 +18,7 @@ public class BattleWindow implements View {
     private GridBagConstraints gbc;
     private JLabel jlabTeam1;
     private JComboBox jcbChoice1, jcbChoice2;
-    private JButton jbtnAdd1, jbtnAdd2, jbtnStart;
+    private JButton jbtnAdd1, jbtnAdd2, jbtnStart, jbtnRepeat;
     private JTextArea jta1, jta2, jta3;
     private EventHandler handler;
 
@@ -47,6 +47,15 @@ public class BattleWindow implements View {
         jbtnAdd1.setEnabled(!inGame);
         jbtnAdd2.setEnabled(!inGame);
         jbtnStart.setEnabled(!inGame);
+        jbtnRepeat.setEnabled(inGame);
+    }
+
+    @Override
+    public void onReset() {
+        onStart(false);
+        jta1.setText("");
+        jta2.setText("");
+        jta3.setText("");
     }
 
     /**
@@ -93,7 +102,7 @@ public class BattleWindow implements View {
         jta1.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         jta1.setEditable(false);
         jta1.setColumns(10);
-        jta1.setRows(5);
+        jta1.setRows(8);
         jta1.setLineWrap(true);
         jta1.setWrapStyleWord(true);
         JScrollPane jsp1 = new JScrollPane(jta1);
@@ -103,7 +112,7 @@ public class BattleWindow implements View {
         jta2.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         jta2.setEditable(false);
         jta2.setColumns(10);
-        jta2.setRows(5);
+        jta2.setRows(8);
         jta2.setLineWrap(true);
         jta2.setWrapStyleWord(true);
         JScrollPane jsp2 = new JScrollPane(jta2);
@@ -113,12 +122,18 @@ public class BattleWindow implements View {
         jbtnStart.addActionListener(handler);
         jbtnStart.setActionCommand(CMD_START_BATTLE);
 
+        // Button "Repeat"
+        jbtnRepeat = new JButton("Repeat");
+        jbtnRepeat.addActionListener(handler);
+        jbtnRepeat.setActionCommand(CMD_REPEAT);
+        jbtnRepeat.setEnabled(false);
+
         // Log TextArea
         jta3 = new JTextArea();
         jta3.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         jta3.setEditable(false);
         jta3.setColumns(15);
-        jta3.setRows(5);
+        jta3.setRows(8);
         jta3.setLineWrap(true);
         jta3.setWrapStyleWord(true);
         JScrollPane jsp3 = new JScrollPane(jta3);
@@ -131,8 +146,9 @@ public class BattleWindow implements View {
         addComponent(0, 3, 1, 1, GridBagConstraints.NONE, GridBagConstraints.NORTHWEST,0.0, 0.0, jfrm, jbtnAdd2);
         addComponent(1, 0, 2, 2, GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST,0.0, 0.0, jfrm, jsp1);
         addComponent(1, 2, 2, 2, GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST,0.0, 0.0, jfrm, jsp2);
-        addComponent(3, 0, 1, 3, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER, 0.0, 0.0, jfrm, jbtnStart);
+        addComponent(3, 0, 1, 1, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER, 0.0, 0.0, jfrm, jbtnStart);
         addComponent(3, 1, 3, 3, GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST,0.0, 0.0, jfrm, jsp3);
+        addComponent(5, 0, 1, 1, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER, 0.0, 0.0, jfrm, jbtnRepeat);
 
         return jfrm;
     }
