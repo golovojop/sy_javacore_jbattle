@@ -42,6 +42,7 @@ public abstract class Hero implements Cloneable, Comparable {
             liveCam.nextComment(name + " уже мертвый!");
         } else {
             health -= damage;
+            liveCam.nextComment("\t<" + name + " remaining heal: " + health + ">");
         }
     }
 

@@ -25,7 +25,7 @@ public class Team {
     private Hero getMoreUnhealthy(){
         Hero h = heroes[0];
         for (int i =1; i < heroes.length; i++){
-            if(h.health < heroes[i].health) h = heroes[i];
+            if(h.health > heroes[i].health) h = heroes[i];
         }
         return h;
     }
