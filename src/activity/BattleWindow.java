@@ -93,7 +93,7 @@ public class BattleWindow implements View {
         jta1.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         jta1.setEditable(false);
         jta1.setColumns(10);
-        jta1.setRows(5);
+        jta1.setRows(8);
         jta1.setLineWrap(true);
         jta1.setWrapStyleWord(true);
         JScrollPane jsp1 = new JScrollPane(jta1);
@@ -103,7 +103,7 @@ public class BattleWindow implements View {
         jta2.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         jta2.setEditable(false);
         jta2.setColumns(10);
-        jta2.setRows(5);
+        jta2.setRows(8);
         jta2.setLineWrap(true);
         jta2.setWrapStyleWord(true);
         JScrollPane jsp2 = new JScrollPane(jta2);
@@ -118,7 +118,7 @@ public class BattleWindow implements View {
         jta3.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         jta3.setEditable(false);
         jta3.setColumns(15);
-        jta3.setRows(5);
+        jta3.setRows(8);
         jta3.setLineWrap(true);
         jta3.setWrapStyleWord(true);
         JScrollPane jsp3 = new JScrollPane(jta3);
