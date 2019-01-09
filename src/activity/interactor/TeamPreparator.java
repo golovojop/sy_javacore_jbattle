@@ -101,7 +101,6 @@ public class TeamPreparator implements Preparator, TvShow {
 
     @Override
     public String commitCandidate(int teamId) {
-
         return dummyteams[teamId].addHero();
     }
 
@@ -114,6 +113,9 @@ public class TeamPreparator implements Preparator, TvShow {
     public void nextComment(String message) {
         presenter.nextComment(message);
     }
+
+    @Override
+    public void reInit() {}
 
     @Override
     public boolean commandToFight() {

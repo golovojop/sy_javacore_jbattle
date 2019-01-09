@@ -18,7 +18,7 @@ public class BattleWindow implements View {
     private GridBagConstraints gbc;
     private JLabel jlabTeam1;
     private JComboBox jcbChoice1, jcbChoice2;
-    private JButton jbtnAdd1, jbtnAdd2, jbtnStart;
+    private JButton jbtnAdd1, jbtnAdd2, jbtnStart, jbtnRepeat;
     private JTextArea jta1, jta2, jta3;
     private EventHandler handler;
 
@@ -47,6 +47,15 @@ public class BattleWindow implements View {
         jbtnAdd1.setEnabled(!inGame);
         jbtnAdd2.setEnabled(!inGame);
         jbtnStart.setEnabled(!inGame);
+        jbtnRepeat.setEnabled(inGame);
+    }
+
+    @Override
+    public void onReset() {
+        onStart(false);
+        jta1.setText("");
+        jta2.setText("");
+        jta3.setText("");
     }
 
     /**
@@ -113,6 +122,12 @@ public class BattleWindow implements View {
         jbtnStart.addActionListener(handler);
         jbtnStart.setActionCommand(CMD_START_BATTLE);
 
+        // Button "Repeat"
+        jbtnRepeat = new JButton("Repeat");
+        jbtnRepeat.addActionListener(handler);
+        jbtnRepeat.setActionCommand(CMD_REPEAT);
+        jbtnRepeat.setEnabled(false);
+
         // Log TextArea
         jta3 = new JTextArea();
         jta3.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
@@ -133,6 +148,7 @@ public class BattleWindow implements View {
         addComponent(1, 2, 2, 2, GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST,0.0, 0.0, jfrm, jsp2);
         addComponent(3, 0, 1, 3, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER, 0.0, 0.0, jfrm, jbtnStart);
         addComponent(3, 1, 3, 3, GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST,0.0, 0.0, jfrm, jsp3);
+        addComponent(5, 0, 1, 1, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER, 0.0, 0.0, jfrm, jbtnRepeat);
 
         return jfrm;
     }

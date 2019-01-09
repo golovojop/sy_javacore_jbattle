@@ -42,6 +42,9 @@ public class EventHandler implements Presenter, ActionListener  {
             case CMD_START_BATTLE:
                 mainWindow.onStart(preparator.commandToFight());
                 break;
+            case CMD_REPEAT:
+                mainWindow.onReset();
+                preparator.reInit();
         }
     }
 
