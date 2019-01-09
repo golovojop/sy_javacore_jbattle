@@ -90,11 +90,15 @@ public class TeamPreparator implements Preparator, TvShow {
     private DummyTeam[] dummyteams;
     private Presenter presenter;
 
-    public TeamPreparator(Presenter presenter, int qty) {
+    public TeamPreparator(Presenter presenter) {
         this.presenter = presenter;
+        init();
+    }
 
-        dummyteams = new DummyTeam[qty];
-        for(int i = 0; i < qty; i++){
+    // Create local DummyTeam array
+    private void init() {
+        dummyteams = new DummyTeam[TEAMS_QTY];
+        for(int i = 0; i < TEAMS_QTY; i++){
             dummyteams[i] = new DummyTeam(i);
         }
     }
@@ -115,7 +119,9 @@ public class TeamPreparator implements Preparator, TvShow {
     }
 
     @Override
-    public void reInit() {}
+    public void reInit() {
+        init();
+    }
 
     @Override
     public boolean commandToFight() {
