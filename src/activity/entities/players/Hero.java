@@ -61,7 +61,7 @@ public abstract class Hero implements Cloneable, Comparable {
         return getClass().getSimpleName() + ":" + name;
     }
     public String getCapacity() {
-        return getClass().getSimpleName() + ":" + name + "\n d:" + damage + ", h:" + health;
+        return getClass().getSimpleName() + ":" + name + "\n damage:" + damage + ", health:" + health;
     }
 
     public Object clone() throws CloneNotSupportedException {
