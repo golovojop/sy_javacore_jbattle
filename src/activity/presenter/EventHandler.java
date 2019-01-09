@@ -1,53 +1,52 @@
 package activity.presenter;
 
 import activity.BattleWindow;
-import activity.presenter.interactor.Preparator;
-import activity.presenter.interactor.TeamsPreparation;
+import activity.interactor.Preparator;
+import activity.interactor.TeamPreparator;
 
 import javax.swing.*;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import static activity.presenter.entities.ShareData.*;
+import static activity.entities.ShareData.*;
 
 
-public class EventHandler implements ActionListener /*, ListSelectionListener*/ {
+public class EventHandler implements Presenter, ActionListener  {
 
     View mainWindow;
     Preparator preparator;
 
     public EventHandler(BattleWindow mainWindow) {
         this.mainWindow = mainWindow;
-        preparator = new TeamsPreparation();
+        preparator = new TeamPreparator(this, TEAMS_QTY);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String tmp;
+        String heroInfo;
 
         switch (e.getActionCommand()) {
-            case CMD_ADD_TO_TEAM1:
+            case CMD_OFFER_MEMBER_FOR_TEAM1:
+                preparator.setCandidate(0, ((JComboBox) e.getSource()).getSelectedIndex());
                 break;
-            case CMD_ADD_TO_TEAM2:
+            case CMD_OFFER_MEMBER_FOR_TEAM2:
+                preparator.setCandidate(1, ((JComboBox) e.getSource()).getSelectedIndex());
+                break;
+            case CMD_COMMIT_MEMBER_TO_TEAM1:
+                heroInfo = preparator.commitCandidate(0);
+                if(heroInfo != null) mainWindow.addTeam1Player(heroInfo);
+                break;
+            case CMD_COMMIT_MEMBER_TO_TEAM2:
+                heroInfo = preparator.commitCandidate(1);
+                if(heroInfo != null) mainWindow.addTeam2Player(heroInfo);
                 break;
             case CMD_START_BATTLE:
-                mainWindow.onStart(true);
-                break;
-            case CMD_SELECTED_FOR_TEAM1:
-                //mainWindow.addTeam1Player(((JComboBox) e.getSource()).getSelectedItem().toString());
-                tmp = TeamsPreparation.heroes[((JComboBox) e.getSource()).getSelectedIndex()].getCapacity();
-                mainWindow.addTeam1Player(tmp);
-                break;
-            case CMD_SELECTED_FOR_TEAM2:
-                tmp = TeamsPreparation.heroes[((JComboBox) e.getSource()).getSelectedIndex()].getCapacity();
-                mainWindow.addTeam1Player(tmp);
+                mainWindow.onStart(preparator.commandToFight());
                 break;
         }
     }
 
-//    @Override
-//    public void valueChanged(ListSelectionEvent e) {
-//
-//    }
+    @Override
+    public void nextComment(String message) {
+        mainWindow.logIt(message);
+    }
 }

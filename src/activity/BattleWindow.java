@@ -5,9 +5,9 @@ import javax.swing.*;
 import javax.swing.border.EtchedBorder;
 import activity.presenter.EventHandler;
 import activity.presenter.View;
-import activity.presenter.entities.players.Hero;
-import activity.presenter.interactor.*;
-import static activity.presenter.entities.ShareData.*;
+import activity.entities.players.Hero;
+import activity.interactor.*;
+import static activity.entities.ShareData.*;
 
 public class BattleWindow implements View {
 
@@ -39,7 +39,7 @@ public class BattleWindow implements View {
 
     @Override
     public void logIt(String message) {
-
+        jta3.append(message + "\n");
     }
 
     @Override
@@ -57,168 +57,107 @@ public class BattleWindow implements View {
         gbc = new GridBagConstraints();
 
         jfrm.setLayout(gbl);
-        jfrm.setSize(600, 450);
+        jfrm.setSize(800, 600);
         jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-        // Set Constraints
-        gbc.anchor = GridBagConstraints.NORTHWEST;
-        gbc.fill   = GridBagConstraints.NONE;
-        gbc.insets = new Insets(10, 10, 10, 10);
-        gbc.gridheight = 1;
-        gbc.gridwidth  = 1;
-        gbc.ipadx = 0;
-        gbc.ipady = 0;
-        gbc.weightx = 0.0;
-        gbc.weighty = 0.0;
 
         // Team1 list selection
         jcbChoice1 = new JComboBox();
-        for(Hero hero : TeamsPreparation.heroes) {
-            jcbChoice1.addItem(hero);
+        // Формировать список кандидатов в команду 1 из общего массива героев
+        for(int i = 0; i < TeamPreparator.heroes.length; i++){
+            if(i % 2 == 0) jcbChoice1.addItem(TeamPreparator.heroes[i]);
         }
         jcbChoice1.addActionListener(handler);
-        jcbChoice1.setActionCommand(CMD_SELECTED_FOR_TEAM1);
-        gbc.gridy = 0;                    // Номер строки
-        gbc.gridx = 0;                    // Номер столбца
-        gbl.setConstraints(jcbChoice1, gbc);
-        jfrm.add(jcbChoice1);
+        jcbChoice1.setActionCommand(CMD_OFFER_MEMBER_FOR_TEAM1);
 
         // Button Add1
         jbtnAdd1 = new JButton("Add to Team 1");
         jbtnAdd1.addActionListener(handler);
-        jbtnAdd1.setActionCommand(CMD_ADD_TO_TEAM1);
-        gbc.gridy = 0;
-        gbc.gridx = 1;
-        gbl.setConstraints(jbtnAdd1, gbc);
-        jfrm.add(jbtnAdd1);
+        jbtnAdd1.setActionCommand(CMD_COMMIT_MEMBER_TO_TEAM1);
 
         // Team2 list selection
         jcbChoice2 = new JComboBox();
-        for(Hero hero : TeamsPreparation.heroes) {
-            jcbChoice2.addItem(hero);
+        // Формировать список кандидатов в команду 2 из общего массива героев
+        for(int i = 0; i < TeamPreparator.heroes.length; i++){
+            if(i % 2 != 0) jcbChoice2.addItem(TeamPreparator.heroes[i]);
         }
-        //for(String s: team2) jcbChoice2.addItem(s);
         jcbChoice2.addActionListener(handler);
-        jcbChoice2.setActionCommand(CMD_SELECTED_FOR_TEAM2);
-        gbc.gridy = 0;                    // Номер строки
-        gbc.gridx = 2;                    // Номер столбца
-        gbl.setConstraints(jcbChoice2, gbc);
-        jfrm.add(jcbChoice2);
+        jcbChoice2.setActionCommand(CMD_OFFER_MEMBER_FOR_TEAM2);
 
         // Button Add2
         jbtnAdd2 = new JButton("Add to Team 2");
         jbtnAdd2.addActionListener(handler);
-        jbtnAdd2.setActionCommand(CMD_ADD_TO_TEAM2);
-        gbc.gridy = 0;                    // Номер строки
-        gbc.gridx = 3;                    // Номер столбца
-        gbl.setConstraints(jbtnAdd2, gbc);
-        jfrm.add(jbtnAdd2);
+        jbtnAdd2.setActionCommand(CMD_COMMIT_MEMBER_TO_TEAM2);
 
-//        jta1 = new JTextArea();
-//        jta1.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-//        jta1.setEditable(false);
-//        jta1.setColumns(15);
-//        jta1.setRows(5);
-//        jta1.setLineWrap(true);
-//        jta1.setWrapStyleWord(true);
-//        gbc.fill = GridBagConstraints.HORIZONTAL;
-//        gbc.gridy = 1;                    // Номер строки
-//        gbc.gridx = 0;                    // Номер столбца
-//        gbc.gridwidth  = 2;
-//        gbl.setConstraints(jta1, gbc);
-//        jfrm.add(jta1);
-
+        // Team1 players
         jta1 = new JTextArea();
         jta1.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         jta1.setEditable(false);
-        jta1.setColumns(15);
+        jta1.setColumns(10);
         jta1.setRows(5);
         jta1.setLineWrap(true);
         jta1.setWrapStyleWord(true);
         JScrollPane jsp1 = new JScrollPane(jta1);
-        gbc.fill = GridBagConstraints.HORIZONTAL;
-        gbc.gridy = 1;                    // Номер строки
-        gbc.gridx = 0;                    // Номер столбца
-        gbc.gridwidth  = 2;
-        gbl.setConstraints(jsp1, gbc);
-        jfrm.add(jsp1);
 
-
-//        jta2 = new JTextArea();
-//        jta2.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-//        jta2.setEditable(false);
-//        jta2.setColumns(15);
-//        jta2.setRows(5);
-//        jta2.setLineWrap(true);
-//        jta2.setWrapStyleWord(true);
-//        gbc.fill   = GridBagConstraints.HORIZONTAL;
-//        gbc.gridy = 1;                    // Номер строки
-//        gbc.gridx = 2;                    // Номер столбца
-//        gbc.gridwidth  = 2;
-//        gbl.setConstraints(jta2, gbc);
-//        jfrm.add(jta2);
-
+        // Team2 players
         jta2 = new JTextArea();
         jta2.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         jta2.setEditable(false);
-        jta2.setColumns(15);
+        jta2.setColumns(10);
         jta2.setRows(5);
         jta2.setLineWrap(true);
         jta2.setWrapStyleWord(true);
         JScrollPane jsp2 = new JScrollPane(jta2);
-        gbc.fill   = GridBagConstraints.HORIZONTAL;
-        gbc.gridy = 1;                    // Номер строки
-        gbc.gridx = 2;                    // Номер столбца
-        gbc.gridwidth  = 2;
-        gbl.setConstraints(jsp2, gbc);
-        jfrm.add(jsp2);
 
-
-
-
-        // Button Down
+        // Button "Start"
         jbtnStart = new JButton("Start");
         jbtnStart.addActionListener(handler);
         jbtnStart.setActionCommand(CMD_START_BATTLE);
-        gbc.anchor = GridBagConstraints.CENTER;
-        gbc.gridy = 2;
-        gbc.gridx = 0;
-        gbc.gridwidth  = 1;
-        gbl.setConstraints(jbtnStart, gbc);
-        jfrm.add(jbtnStart);
 
-
-//        jta3 = new JTextArea();
-//        gbc.anchor = GridBagConstraints.NORTHEAST;
-//        jta3.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
-//        jta3.setEditable(false);
-//        jta3.setColumns(25);
-//        jta3.setRows(5);
-//        jta3.setLineWrap(true);
-//        jta3.setWrapStyleWord(true);
-//        gbc.gridy = 2;                    // Номер строки
-//        gbc.gridx = 1;                    // Номер столбца
-//        gbc.gridwidth  = 3;
-//        gbl.setConstraints(jta3, gbc);
-//        jfrm.add(jta3);
-
+        // Log TextArea
         jta3 = new JTextArea();
-        gbc.anchor = GridBagConstraints.NORTHEAST;
         jta3.setBorder(BorderFactory.createEtchedBorder(EtchedBorder.LOWERED));
         jta3.setEditable(false);
-        jta3.setColumns(25);
+        jta3.setColumns(15);
         jta3.setRows(5);
         jta3.setLineWrap(true);
         jta3.setWrapStyleWord(true);
         JScrollPane jsp3 = new JScrollPane(jta3);
-        gbc.gridy = 2;                    // Номер строки
-        gbc.gridx = 1;                    // Номер столбца
-        gbc.gridwidth  = 3;
-        gbl.setConstraints(jsp3, gbc);
-        jfrm.add(jsp3);
 
+        // Set Constraints
+        gbc.insets = new Insets(5, 5, 5, 5);
+        addComponent(0, 0, 1, 1, GridBagConstraints.NONE, GridBagConstraints.NORTHWEST,0.0, 0.0, jfrm, jcbChoice1);
+        addComponent(0, 1, 1, 1, GridBagConstraints.NONE, GridBagConstraints.NORTHWEST,0.0, 0.0, jfrm, jbtnAdd1);
+        addComponent(0, 2, 1, 1, GridBagConstraints.NONE, GridBagConstraints.NORTHWEST,0.0, 0.0, jfrm, jcbChoice2);
+        addComponent(0, 3, 1, 1, GridBagConstraints.NONE, GridBagConstraints.NORTHWEST,0.0, 0.0, jfrm, jbtnAdd2);
+        addComponent(1, 0, 2, 2, GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST,0.0, 0.0, jfrm, jsp1);
+        addComponent(1, 2, 2, 2, GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST,0.0, 0.0, jfrm, jsp2);
+        addComponent(3, 0, 1, 3, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER, 0.0, 0.0, jfrm, jbtnStart);
+        addComponent(3, 1, 3, 3, GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST,0.0, 0.0, jfrm, jsp3);
 
         return jfrm;
+    }
+
+    private void addComponent (
+            int gridy,
+            int gridx,
+            int gridwidth,
+            int gridheight,
+            int fill,
+            int anchor,
+            double weightx,
+            double weighty,
+            Container frame,
+            Component component ) {
+        gbc.gridx = gridx;
+        gbc.gridy = gridy;
+        gbc.gridwidth = gridwidth;
+        gbc.gridheight = gridheight;
+        gbc.anchor = anchor;
+        gbc.fill = fill;
+        gbc.weightx = weightx;
+        gbc.weighty = weighty;
+        gbl.setConstraints( component, gbc );
+        frame.add( component );
     }
 
     /**
