@@ -21,7 +21,7 @@ public class ShareData {
     public static final String CMD_COMMIT_MEMBER_TO_TEAM1 = "CMD_COMMIT_MEMBER_TO_TEAM1";
     public static final String CMD_COMMIT_MEMBER_TO_TEAM2 = "CMD_COMMIT_MEMBER_TO_TEAM2";
     public static final String CMD_START_BATTLE = "CMD_START_BATTLE";
-
+    public static final String CMD_REPEAT = "CMD_REPEAT";
 
     public static final int HEAL_MAX_WARRIOR = 250;
     public static final int HEAL_MAX_ASSASSIN = 190;
