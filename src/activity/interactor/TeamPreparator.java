@@ -5,6 +5,9 @@ import java.util.List;
 
 import activity.action.Battle;
 import activity.entities.players.*;
+import activity.interactor.exceptions.TeamConsistOfException;
+import activity.interactor.exceptions.TeamIsFullException;
+import activity.interactor.exceptions.TeamIsNotFullException;
 import activity.presenter.Presenter;
 
 import static activity.entities.ShareData.*;
@@ -12,7 +15,8 @@ import static activity.entities.ShareData.*;
 public class TeamPreparator implements Preparator, TvShow {
 
     /**
-     * Класс собирающий сведения о кандидатах в команду
+     * Класс собирающий сведения о кандидатах в команду.
+     * Это индексы из глобального массива персонажей heroes
      */
     private class DummyTeam {
         private int teamId;
@@ -87,7 +91,7 @@ public class TeamPreparator implements Preparator, TvShow {
     /**
      * Массив подготовленных команд
      */
-    private DummyTeam[] dummyteams;
+    private DummyTeam[] dummyTeams;
     private Presenter presenter;
 
     public TeamPreparator(Presenter presenter) {
@@ -97,20 +101,20 @@ public class TeamPreparator implements Preparator, TvShow {
 
     // Create local DummyTeam array
     private void init() {
-        dummyteams = new DummyTeam[TEAMS_QTY];
+        dummyTeams = new DummyTeam[TEAMS_QTY];
         for(int i = 0; i < TEAMS_QTY; i++){
-            dummyteams[i] = new DummyTeam(i);
+            dummyTeams[i] = new DummyTeam(i);
         }
     }
 
     @Override
     public String commitCandidate(int teamId) {
-        return dummyteams[teamId].addHero();
+        return dummyTeams[teamId].addHero();
     }
 
     @Override
     public void setCandidate(int teamId, int candidateId) {
-        dummyteams[teamId].setCandidateId(candidateId);
+        dummyTeams[teamId].setCandidateId(candidateId);
     }
 
     @Override
@@ -128,10 +132,10 @@ public class TeamPreparator implements Preparator, TvShow {
         Boolean result = false;
 
         try {
-            for(DummyTeam dt : dummyteams) {
+            for(DummyTeam dt : dummyTeams) {
                 if(dt.getPretenders() < TEAM_SIZE) throw new TeamIsNotFullException();
             }
-            Battle battle = new Battle(dummyteams[0].createTeam(), dummyteams[1].createTeam(), this);
+            Battle battle = new Battle(dummyTeams[0].createTeam(), dummyTeams[1].createTeam(), this);
             battle.fight();
             result = true;
         }

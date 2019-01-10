@@ -2,7 +2,7 @@ package activity.entities.players;
 
 import activity.interactor.TvShow;
 
-public abstract class Hero implements Cloneable, Comparable {
+public abstract class Hero implements Cloneable {
 
     // имя героя
     protected String name;
@@ -20,11 +20,6 @@ public abstract class Hero implements Cloneable, Comparable {
         this.name = name;
         this.damage = damage;
         this.addHeal = addHeal;
-    }
-
-    @Override
-    public int compareTo(Object o) {
-        return this.health - ((Hero)o).health;
     }
 
     // Нанести удар другому Hero

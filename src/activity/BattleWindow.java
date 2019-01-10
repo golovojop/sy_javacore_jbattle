@@ -10,17 +10,18 @@ import activity.interactor.*;
 import static activity.entities.ShareData.*;
 
 public class BattleWindow implements View {
-
     /**
      * View components
      */
     private GridBagLayout gbl;
     private GridBagConstraints gbc;
-    private JLabel jlabTeam1;
     private JComboBox jcbChoice1, jcbChoice2;
     private JButton jbtnAdd1, jbtnAdd2, jbtnStart, jbtnRepeat;
     private JTextArea jta1, jta2, jta3;
     private EventHandler handler;
+
+    private final int FRAME_WIDTH = 800;
+    private final int FRAME_HEIGHT = 600;
 
     public BattleWindow() {
         handler = new EventHandler(this);
@@ -56,6 +57,18 @@ public class BattleWindow implements View {
         jta1.setText("");
         jta2.setText("");
         jta3.setText("");
+        initPlayerList();
+    }
+
+    // Добавить имена героев в элементы JComboBox
+    private void initPlayerList() {
+        jcbChoice1.removeAllItems();
+        jcbChoice2.removeAllItems();
+
+        for(int i = 0; i < TeamPreparator.heroes.length; i++){
+            if(i % 2 == 0)  jcbChoice1.addItem(TeamPreparator.heroes[i]);
+            else            jcbChoice2.addItem(TeamPreparator.heroes[i]);
+        }
     }
 
     /**
@@ -66,31 +79,22 @@ public class BattleWindow implements View {
         gbc = new GridBagConstraints();
 
         jfrm.setLayout(gbl);
-        jfrm.setSize(800, 600);
         jfrm.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // Team1 list selection
         jcbChoice1 = new JComboBox();
-        // Формировать список кандидатов в команду 1 из общего массива героев
-        for(int i = 0; i < TeamPreparator.heroes.length; i++){
-            if(i % 2 == 0) jcbChoice1.addItem(TeamPreparator.heroes[i]);
-        }
         jcbChoice1.addActionListener(handler);
         jcbChoice1.setActionCommand(CMD_OFFER_MEMBER_FOR_TEAM1);
+
+        // Team2 list selection
+        jcbChoice2 = new JComboBox();
+        jcbChoice2.addActionListener(handler);
+        jcbChoice2.setActionCommand(CMD_OFFER_MEMBER_FOR_TEAM2);
 
         // Button Add1
         jbtnAdd1 = new JButton("Add to Team 1");
         jbtnAdd1.addActionListener(handler);
         jbtnAdd1.setActionCommand(CMD_COMMIT_MEMBER_TO_TEAM1);
-
-        // Team2 list selection
-        jcbChoice2 = new JComboBox();
-        // Формировать список кандидатов в команду 2 из общего массива героев
-        for(int i = 0; i < TeamPreparator.heroes.length; i++){
-            if(i % 2 != 0) jcbChoice2.addItem(TeamPreparator.heroes[i]);
-        }
-        jcbChoice2.addActionListener(handler);
-        jcbChoice2.setActionCommand(CMD_OFFER_MEMBER_FOR_TEAM2);
 
         // Button Add2
         jbtnAdd2 = new JButton("Add to Team 2");
@@ -149,6 +153,15 @@ public class BattleWindow implements View {
         addComponent(3, 0, 1, 1, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER, 0.0, 0.0, jfrm, jbtnStart);
         addComponent(3, 1, 3, 3, GridBagConstraints.HORIZONTAL, GridBagConstraints.NORTHWEST,0.0, 0.0, jfrm, jsp3);
         addComponent(5, 0, 1, 1, GridBagConstraints.HORIZONTAL, GridBagConstraints.CENTER, 0.0, 0.0, jfrm, jbtnRepeat);
+
+        // Формировать списки кандидатов в команды в элементах JComboBox
+        initPlayerList();
+
+        // Позиционирование окна на экране
+        Dimension screenDim = Toolkit.getDefaultToolkit().getScreenSize();
+        int frameX = (screenDim.width - FRAME_WIDTH)/2;
+        int frameY = (screenDim.height - FRAME_HEIGHT)/2;
+        jfrm.setBounds(frameX, frameY, FRAME_WIDTH, FRAME_HEIGHT);
 
         return jfrm;
     }
