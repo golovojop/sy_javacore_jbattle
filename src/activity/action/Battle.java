@@ -54,8 +54,6 @@ public class Battle {
                     }
             }
 
-
-
             rounds++;
         }
         while (team1.isAnybodyLive() && team2.isAnybodyLive());

@@ -45,6 +45,5 @@ public class ShareData {
 
     public static void logDbg(String msg) {
         showMessageDialog(null, msg);
-//        System.out.println(msg);
     }
 }
