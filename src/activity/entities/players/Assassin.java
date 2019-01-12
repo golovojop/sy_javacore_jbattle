@@ -19,10 +19,10 @@ public class Assassin extends Hero {
         // Себя бить нельзя
         if (hero != this) {
             // Бить может только живой
-            if(health < 0) {
+            if (isDead()) {
                 liveCam.nextComment(this.name + " погиб и бить не может!");
             } else {
-                liveCam.nextComment(this.name + " нанес урон " + hero.name);
+                liveCam.nextComment(this.name + " бьет по " + hero.name);
                 hero.causeDamage(damage + cricitalHit);
             }
         }
@@ -30,15 +30,9 @@ public class Assassin extends Hero {
 
     @Override
     // Пополнить свое здоровье
-    public boolean addHealth(int health) {
-        boolean result = false;
+    public void addHealth(int health) {
         this.health += health;
-        if(this.health > 0) {
-            if(this.health > HEAL_MAX_ASSASSIN) this.health = HEAL_MAX_ASSASSIN;
-            result = true;
-        }
-
-        return result;
+        if (this.health > HEAL_MAX_ASSASSIN) this.health = HEAL_MAX_ASSASSIN;
     }
 
     @Override

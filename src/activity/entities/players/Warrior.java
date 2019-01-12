@@ -13,10 +13,10 @@ public class Warrior extends Hero {
         // Себя бить нельзя
         if (hero != this) {
             // Бить может только живой
-            if(health < 0) {
+            if (isDead()) {
                 liveCam.nextComment(this.name + " погиб и бить не может!");
             } else {
-                liveCam.nextComment(this.name + " нанес урон " + hero.name);
+                liveCam.nextComment(this.name + " бьет по " + hero.name);
                 hero.causeDamage(damage);
             }
         }
@@ -24,14 +24,10 @@ public class Warrior extends Hero {
 
     @Override
     // Получить здоровье
-    public boolean addHealth(int health) {
-        boolean result = false;
+    public void addHealth(int health) {
         this.health += health;
-        if(this.health > 0) {
-            if(this.health > HEAL_MAX_WARRIOR) this.health = HEAL_MAX_WARRIOR;
-            result = true;
-        }
-        return result;
+        if (this.health > HEAL_MAX_WARRIOR) this.health = HEAL_MAX_WARRIOR;
+
     }
 
     @Override

@@ -22,7 +22,6 @@ public abstract class Hero implements Cloneable {
         this.name = name;
         this.damage = damage;
         this.addHeal = addHeal;
-        this.isDead = false;
     }
 
     // Нанести удар другому Hero
@@ -32,7 +31,7 @@ public abstract class Hero implements Cloneable {
     public abstract void healing(Hero hero);
 
     // Пополнить свое здоровье
-    public abstract boolean addHealth(int health);
+    public abstract void addHealth(int health);
 
     // Обработать полученный удар
     public void causeDamage(int damage) {
