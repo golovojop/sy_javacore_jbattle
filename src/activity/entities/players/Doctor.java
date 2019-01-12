@@ -15,9 +15,15 @@ public class Doctor extends Hero {
 
     @Override
     // Получить здоровье
-    public void addHealth(int health) {
+    public boolean addHealth(int health) {
+        boolean result = false;
         this.health += health;
-        if(this.health > HEAL_MAX_DOCTOR) this.health = HEAL_MAX_DOCTOR;
+        if(this.health > 0) {
+            if(this.health > HEAL_MAX_DOCTOR) this.health = HEAL_MAX_DOCTOR;
+            result = true;
+        }
+
+        return result;
     }
 
     @Override
@@ -25,8 +31,10 @@ public class Doctor extends Hero {
     public void healing(Hero hero) {
         // Себя лечить нельзя
         if(hero != this) {
-            hero.addHealth(addHeal);
-            liveCam.nextComment(this.name + " подлечил " + hero.name);
+            if(hero.addHealth(addHeal)) {
+                if(hero.isAlive()) liveCam.nextComment(this.name + " подлечил " + hero.name);
+                else liveCam.nextComment(this.name + ": " + hero.name + " уже не лечится");
+            }
         }
     }
 }

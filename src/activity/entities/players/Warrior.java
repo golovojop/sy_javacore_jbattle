@@ -24,9 +24,14 @@ public class Warrior extends Hero {
 
     @Override
     // Получить здоровье
-    public void addHealth(int health) {
+    public boolean addHealth(int health) {
+        boolean result = false;
         this.health += health;
-        if(this.health > HEAL_MAX_WARRIOR) this.health = HEAL_MAX_WARRIOR;
+        if(this.health > 0) {
+            if(this.health > HEAL_MAX_WARRIOR) this.health = HEAL_MAX_WARRIOR;
+            result = true;
+        }
+        return result;
     }
 
     @Override

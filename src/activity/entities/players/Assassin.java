@@ -30,9 +30,15 @@ public class Assassin extends Hero {
 
     @Override
     // Пополнить свое здоровье
-    public void addHealth(int health) {
+    public boolean addHealth(int health) {
+        boolean result = false;
         this.health += health;
-        if(this.health > HEAL_MAX_ASSASSIN) this.health = HEAL_MAX_ASSASSIN;
+        if(this.health > 0) {
+            if(this.health > HEAL_MAX_ASSASSIN) this.health = HEAL_MAX_ASSASSIN;
+            result = true;
+        }
+
+        return result;
     }
 
     @Override

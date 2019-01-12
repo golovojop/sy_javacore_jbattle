@@ -15,11 +15,14 @@ public abstract class Hero implements Cloneable {
     // трансляция боя
     protected TvShow liveCam;
 
+    protected boolean isDead;
+
     public Hero(String name, int health, int damage, int addHeal) {
         this.health = health;
         this.name = name;
         this.damage = damage;
         this.addHeal = addHeal;
+        this.isDead = false;
     }
 
     // Нанести удар другому Hero
@@ -29,20 +32,29 @@ public abstract class Hero implements Cloneable {
     public abstract void healing(Hero hero);
 
     // Пополнить свое здоровье
-    public abstract void addHealth(int health);
+    public abstract boolean addHealth(int health);
 
     // Обработать полученный удар
     public void causeDamage(int damage) {
-        if(health < 0) {
+        if(isDead()) {
             liveCam.nextComment(name + " уже мертвый!");
         } else {
             health -= damage;
-            liveCam.nextComment("\t<" + name + " remaining heal: " + health + ">");
+            if(isDead()) {
+                liveCam.nextComment("\t" + name + " погиб");
+            }
+            else {
+                liveCam.nextComment("\t<" + name + " remaining heal: " + health + ">");
+            }
         }
     }
 
+    public boolean isDead() {
+        return (health <= 0);
+    }
+
     public boolean isAlive() {
-        return health > 0;
+        return !isDead();
     }
 
     public void setLiveCam(TvShow liveCam) {
@@ -50,7 +62,7 @@ public abstract class Hero implements Cloneable {
     }
 
     public String info() {
-        return name + ": h=" + (health < 0 ? " мертв" : health) + ", d=" + damage;
+        return name + ": h=" + (isDead() ? " мертв" : health) + ", d=" + damage;
     }
 
     public String toString() {
