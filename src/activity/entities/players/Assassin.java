@@ -6,12 +6,12 @@ import static activity.entities.ShareData.*;
 
 public class Assassin extends Hero {
 
-    private int cricitalHit;
+    private int criticalHit;
 
     public Assassin(String name, int heal, int damage, int addHeal) {
         super(name, heal, damage, addHeal);
         Random random = new Random();
-        this.cricitalHit = random.nextInt(20);
+        this.criticalHit = random.nextInt(20);
     }
 
     @Override
@@ -23,7 +23,7 @@ public class Assassin extends Hero {
                 liveCam.nextComment(this.name + " погиб и бить не может!");
             } else {
                 liveCam.nextComment(this.name + " бьет по " + hero.name);
-                hero.causeDamage(damage + cricitalHit);
+                hero.causeDamage(damage + criticalHit);
             }
         }
     }
@@ -38,5 +38,9 @@ public class Assassin extends Hero {
     @Override
     public void healing(Hero hero) {
         liveCam.nextComment(name + " не умеет лечить!");
+    }
+
+    public String getCapacity() {
+        return getClass().getSimpleName() + ":" + name + "\n damage:" + damage + " (+ " + criticalHit + "), health:" + health;
     }
 }
