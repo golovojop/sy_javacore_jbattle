@@ -5,4 +5,5 @@ public interface View {
     void addTeam2Player(String player);
     void logIt(String message);
     void onStart(Boolean state);
+    void onReset();
 }
